@@ -5,7 +5,7 @@
                 <div class="card-post">
                     <div class="card-header">
                         <img :src="avatarlogo" class=" h-14 w-14 rounded-full border-yellow-400 border overflow-hidden">
-                        <small class="px-2 py-4"><span>Rico M. Hachero Jr</span></small>
+                        <small class="px-2 py-4"><span>{{ accountname }}</span></small>
                     </div>
                     <div class="card-content">
                         <textarea class="w-full h-full bg-neutral-50 rounded-lg p-12" 
@@ -38,7 +38,7 @@
                             <div class="flex justify-between w-full">
                                 <div class="flex justify-start">
                                     <img :src="avatarlogo" class=" h-14 w-14 rounded-full border-yellow-400 border overflow-hidden">
-                                    <small class="px-2 py-4 m-0 p-0 "><span>Rico M. Hachero Jr</span></small>
+                                    <small class="px-2 py-4 m-0 p-0 "><span>{{ item["name"] }}</span></small>
                                     <small class="py-4 font-normal"><span>{{ item["postedDate"] ?? "Just now " }}</span></small>
                                     <small class="py-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class=" h-4 w-3">
@@ -104,7 +104,8 @@ export default {
         "resultset",
         "postcommenturl",
         "deletecommenturl",
-        "canfilterposturl"
+        "canfilterposturl",
+        "accountname",
     ],
     components: {
         AWN,
@@ -259,10 +260,10 @@ export default {
                     }
                 })
                 .then(function (response) {
-                   if (response.data) {
+                    if (response.data) {
                         notifier.info('Successfully Submit!');
-                   }
-                   _this.refreshUI++;
+                    }
+                    location.reload();
                 });
             };
             let onCancel = () => {

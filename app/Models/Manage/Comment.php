@@ -53,10 +53,13 @@ class Comment extends Model
             DB::beginTransaction();
 
             $comment = self::updateOrCreate([
-                "id" => $data["payload"]["id"], "post_id" => $data["payload"]["postId"], "posted_user_id" => 1], [
-                "parent_id" => 0,
-                "message" => $data["payload"]["message"]
-            ]);
+                "id" => $data["payload"]["id"], 
+                "post_id" => $data["payload"]["postId"], 
+                "posted_user_id" => auth()->user()->id], [
+                    "parent_id" => 0,
+                    "posted_user_id" => auth()->user()->id,
+                    "message" => $data["payload"]["message"]
+                ]);
     
             DB::commit();
             return response()->json($comment, Response::HTTP_OK);

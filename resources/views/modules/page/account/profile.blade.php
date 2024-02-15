@@ -8,6 +8,7 @@
     :resultset="{{ json_encode($data) }}"
     :postcommenturl="{{ json_encode(route("post.comment")) }}"
     :deletecommenturl="{{ json_encode(route("delete.comment")) }}"
-    :canfilterposturl="{{ json_encode(route("filter.post")) }}">
+    :canfilterposturl="{{ json_encode(route("filter.post")) }}"
+    :accountname="{{ json_encode(auth()->user()->name) }}">
 </profile>
 @endsection

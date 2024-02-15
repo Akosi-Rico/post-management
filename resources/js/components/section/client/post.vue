@@ -4,8 +4,8 @@
             <div class="card" v-for="item in resultset['personalPost']">
                 <div class="card-header">
                     <img :src="avatarlogo" class=" h-14 w-14 rounded-full border-yellow-400 border overflow-hidden">
-                    <small class="px-2 py-4"><span>Rico M. Hachero Jr</span></small>
-                    <small class="py-4 font-normal"><span>1 hour ago</span></small>
+                    <small class="px-2 py-4"><span>{{ item.name }}</span></small>
+                    <small class="py-4 font-normal"><span>{{ item.postedDate }}</span></small>
                     <small class="py-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class=" h-4 w-3">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

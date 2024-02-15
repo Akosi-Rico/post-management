@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Throw_;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Manage\Comment;
 use App\Models\Manage\PostRating;
@@ -26,14 +25,16 @@ class Post extends Model
     public static function viewAllPersonalPost($status = 1, $userId = null)
     {
         $posts = self::select(
-                    "id",
-                    "message",
-                    "status",
+                    "posts.id",
+                    "posts.message",
+                    "posts.status",
                     "created_user_id",
-                    "created_at",
-                    "updated_at"
+                    "u.name",
+                    "posts.created_at",
+                    "posts.updated_at"
                 )
-                ->orderBy("id", "desc")
+                ->join("users as u", "u.id", "posts.created_user_id")
+                ->orderBy("posts.created_at", "desc")
                 ->where("status", "=", $status)
                 ->with("comments", "rate");
 
@@ -94,9 +95,9 @@ class Post extends Model
         try {
             DB::beginTransaction();
 
-            $post = self::updateOrCreate(["id" => $data["payload"]["id"]], [
+            $post = self::updateOrCreate(["id" => $data["payload"]["id"], "created_user_id" => auth()->user()->id], [
                 "message" => $data["payload"]["message"],
-                "created_user_id" => 1,
+                "created_user_id" => auth()->user()->id,
                 "status" => (!empty($data["payload"]["archive"]) ? self::IS_INACTIVE : self::IS_ACTIVE)
             ]);
 
